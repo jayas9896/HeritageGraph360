@@ -1,0 +1,31 @@
+{
+  "collections": {
+    "event_payloads": {
+      "description": "Dynamic event payloads from ingestion streams",
+      "example": {
+        "tenantId": "org-us-001",
+        "eventType": "PROFILE_CREATED",
+        "payload": {
+          "profileId": "uuid",
+          "primaryEmail": "user@example.com",
+          "aliases": ["Alias One", "Alias Two"]
+        },
+        "ingestedAt": "2026-01-15T12:00:00Z"
+      }
+    },
+    "evidence_records": {
+      "description": "Scanned documents and evidence metadata",
+      "example": {
+        "tenantId": "org-us-001",
+        "evidenceId": "uuid",
+        "sourceType": "ARCHIVE",
+        "schemaVersion": "1.0",
+        "contentHash": "sha256...",
+        "metadata": {
+          "archiveId": "A-123",
+          "collection": "Census"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: profile-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/heritagegraph360
+    username: heritage
+    password: heritage
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/heritagegraph360
+  kafka:
+    bootstrap-servers: localhost:9092
+  rabbitmq:
+    host: localhost
+    port: 5672
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus

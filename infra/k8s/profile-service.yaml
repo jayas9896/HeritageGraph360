@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-service
+  namespace: heritagegraph360
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profile-service
+  template:
+    metadata:
+      labels:
+        app: profile-service
+    spec:
+      containers:
+        - name: profile-service
+          image: heritagegraph360/profile-service:local
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: profile-service
+  namespace: heritagegraph360
+spec:
+  selector:
+    app: profile-service
+  ports:
+    - port: 8082
+      targetPort: 8082
+      protocol: TCP

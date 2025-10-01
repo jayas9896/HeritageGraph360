@@ -1,0 +1,30 @@
+flowchart LR
+  subgraph Edge
+    GW[gateway-service]
+  end
+  subgraph Security
+    ID[identity-service]
+  end
+  subgraph Core
+    PR[profile-service]
+    IN[ingestion-service]
+    IS[insights-service]
+  end
+  subgraph Data
+    SQL[(PostgreSQL)]
+    NOSQL[(MongoDB)]
+    KAFKA[(Kafka)]
+    KINESIS[(Kinesis)]
+    RABBIT[(RabbitMQ)]
+  end
+
+  GW --> ID
+  GW --> PR
+  GW --> IS
+  PR --> SQL
+  PR --> NOSQL
+  IN --> KAFKA
+  IN --> KINESIS
+  IS --> RABBIT
+  IS --> NOSQL
+  ID --> SQL

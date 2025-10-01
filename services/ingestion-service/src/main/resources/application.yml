@@ -1,0 +1,17 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: ingestion-service
+  kafka:
+    bootstrap-servers: localhost:9092
+app:
+  kinesis:
+    streams:
+      archive-imports: archive-imports
+      partner-datasets: partner-datasets
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingestion-service
+  namespace: heritagegraph360
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ingestion-service
+  template:
+    metadata:
+      labels:
+        app: ingestion-service
+    spec:
+      containers:
+        - name: ingestion-service
+          image: heritagegraph360/ingestion-service:local
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingestion-service
+  namespace: heritagegraph360
+spec:
+  selector:
+    app: ingestion-service
+  ports:
+    - port: 8083
+      targetPort: 8083
+      protocol: TCP

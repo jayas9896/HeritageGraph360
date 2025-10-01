@@ -1,0 +1,23 @@
+classDiagram
+  class Tenant {
+    +String tenantId
+    +String region
+    +String orgId
+  }
+  class PersonProfile {
+    +String profileId
+    +String primaryEmail
+    +String primaryPhone
+    +boolean claimed
+  }
+  class Relationship {
+    +String relationshipId
+    +String status
+  }
+  class EvidenceRecord {
+    +String evidenceId
+    +String sourceType
+  }
+  Tenant "1" --> "many" PersonProfile
+  PersonProfile "1" --> "many" Relationship
+  PersonProfile "1" --> "many" EvidenceRecord

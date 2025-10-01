@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insights-service
+  namespace: heritagegraph360
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: insights-service
+  template:
+    metadata:
+      labels:
+        app: insights-service
+    spec:
+      containers:
+        - name: insights-service
+          image: heritagegraph360/insights-service:local
+          ports:
+            - containerPort: 8084
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: insights-service
+  namespace: heritagegraph360
+spec:
+  selector:
+    app: insights-service
+  ports:
+    - port: 8084
+      targetPort: 8084
+      protocol: TCP

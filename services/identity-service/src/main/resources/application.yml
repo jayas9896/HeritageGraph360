@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: identity-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/heritagegraph360
+    username: heritage
+    password: heritage
+  jpa:
+    hibernate:
+      ddl-auto: validate
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus

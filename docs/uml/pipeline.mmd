@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant Partner as Partner Dataset
+  participant Ingestion as ingestion-service
+  participant Kinesis as Kinesis
+  participant Kafka as Kafka
+  participant Insights as insights-service
+  participant Profile as profile-service
+
+  Partner->>Ingestion: gRPC stream IngestionRecord
+  Ingestion->>Kinesis: PutRecord (archive-imports)
+  Ingestion->>Kafka: Publish profile.events
+  Kafka->>Insights: Consume events
+  Insights->>Profile: Request merge recommendations

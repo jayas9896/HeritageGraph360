@@ -1,0 +1,12 @@
+sequenceDiagram
+  participant User
+  participant Gateway
+  participant Identity
+  participant Profile
+
+  User->>Gateway: Request /api/v1/profiles
+  Gateway->>Identity: OAuth2/SAML validation
+  Identity-->>Gateway: Token validation + roles
+  Gateway->>Profile: Forward request with tenant context
+  Profile-->>Gateway: Response
+  Gateway-->>User: Response
