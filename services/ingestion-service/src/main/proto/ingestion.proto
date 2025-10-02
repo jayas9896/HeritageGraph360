@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package heritagegraph360.ingestion;
+
+option java_multiple_files = true;
+option java_package = "com.heritagegraph360.ingestion.grpc";
+
+service BulkIngestionService {
+  rpc IngestRecords(stream IngestionRecord) returns (stream IngestionStatus);
+  rpc ValidateSchema(SchemaValidationRequest) returns (SchemaValidationResult);
+}
+
+message IngestionRecord {
+  string tenantId = 1;
+  string recordId = 2;
+  string payloadJson = 3;
+}
+
+message IngestionStatus {
+  string recordId = 1;
+  string status = 2;
+  string message = 3;
+}
+
+message SchemaValidationRequest {
+  string tenantId = 1;
+  string schemaJson = 2;
+}
+
+message SchemaValidationResult {
+  string status = 1;
+  string message = 2;
+}
