@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: 'gateway-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['gateway-service:8080']
+  - job_name: 'identity-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['identity-service:8081']
+  - job_name: 'profile-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['profile-service:8082']
+  - job_name: 'ingestion-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['ingestion-service:8083']
+  - job_name: 'insights-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['insights-service:8084']
