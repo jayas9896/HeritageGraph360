@@ -5,6 +5,7 @@
 - SAML SSO federation for institutional tenants.
 - Role-based access control (RBAC) with tenant-scoped roles.
 - RBAC entities persisted in SQL with role, permission, and mapping tables.
+- Policy entities define fine-grained rules for field-level visibility.
 - Least-privilege defaults with explicit elevation workflows.
 
 ## Public Access

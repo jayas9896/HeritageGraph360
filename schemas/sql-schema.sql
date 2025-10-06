@@ -29,6 +29,16 @@ CREATE TABLE permissions (
     name VARCHAR(128) NOT NULL
 );
 
+CREATE TABLE policies (
+    policy_id UUID PRIMARY KEY,
+    tenant_id VARCHAR(64) REFERENCES tenants(tenant_id),
+    name VARCHAR(128) NOT NULL,
+    effect VARCHAR(16) NOT NULL,
+    resource VARCHAR(128) NOT NULL,
+    action VARCHAR(64) NOT NULL,
+    conditions_json TEXT
+);
+
 CREATE TABLE role_permissions (
     role_id UUID REFERENCES roles(role_id),
     permission_id UUID REFERENCES permissions(permission_id),

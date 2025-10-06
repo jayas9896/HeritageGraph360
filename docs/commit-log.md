@@ -4,3 +4,4 @@
 - CL-0003 | 2025-10-03 | Add tenant provisioning and RBAC persistence model | Codex | N/A
 - CL-0004 | 2025-10-04 | Add profile domain APIs and approval workflows | Codex | N/A
 - CL-0005 | 2025-10-05 | Add insights, observability, and deployment assets | Codex | N/A
+- CL-0006 | 2025-10-06 | Add policy persistence and domain rules docs | Codex | N/A

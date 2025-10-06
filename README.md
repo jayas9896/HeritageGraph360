@@ -44,6 +44,7 @@ See `docs/uml/architecture.mmd` for the system topology diagram.
 
 ## Key Docs
 - Architecture: `docs/system-architecture.md`
+- Domain rules: `docs/domain-rules.md`
 - Security: `docs/security.md`
 - Security config examples: `docs/security-config-examples.md`
 - Maven structure: `docs/maven-structure.md`
@@ -55,6 +56,7 @@ See `docs/uml/architecture.mmd` for the system topology diagram.
 - RabbitMQ jobs: `docs/rabbitmq-jobs.md`
 - Testing: `docs/testing.md`
 - Agile artifacts: `docs/agile/*.md`
+- Demo scenarios: `docs/demo-scenarios.md`
 
 ## Local Setup (Baseline)
 1) Build the project:
@@ -73,6 +75,7 @@ See `docs/uml/architecture.mmd` for the system topology diagram.
 - Security: OAuth2 login and SAML federation for enterprise tenants.
 - Failure: simulate Kafka consumer lag and observe backpressure metrics.
 - Scaling: horizontal scale the ingestion service and verify Kinesis shard routing.
+- Detailed scenarios: see `docs/demo-scenarios.md`.
 
 ## Recruiter Summary
 HeritageGraph360 is a secure, enterprise-grade genealogy and lineage verification platform that unifies identity data from modern users and historical archives, processes high-volume record streams with resilient pipelines, and delivers auditable insights for researchers and institutions. It demonstrates multi-tenant security, OAuth2/SAML federation, streaming and async processing, and a rigorous documentation and testing discipline while remaining practical to deploy locally with Docker and Kubernetes.
