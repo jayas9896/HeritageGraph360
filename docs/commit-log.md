@@ -5,3 +5,4 @@
 - CL-0004 | 2025-10-04 | Add profile domain APIs and approval workflows | Codex | N/A
 - CL-0005 | 2025-10-05 | Add insights, observability, and deployment assets | Codex | N/A
 - CL-0006 | 2025-10-06 | Add policy persistence and domain rules docs | Codex | N/A
+- CL-0007 | 2025-10-07 | Fix Maven parent resolution for module builds | Codex | N/A

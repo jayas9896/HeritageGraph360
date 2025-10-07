@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.heritagegraph360</groupId>
     <artifactId>heritagegraph360-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>\n    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <artifactId>gateway-service</artifactId>
@@ -56,3 +56,4 @@
     </plugins>
   </build>
 </project>
+
