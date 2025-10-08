@@ -24,6 +24,8 @@
     <java.version>17</java.version>
     <spring.boot.version>3.3.2</spring.boot.version>
     <spring.cloud.version>2023.0.3</spring.cloud.version>
+    <aws.sdk.version>2.25.59</aws.sdk.version>
+    <grpc.version>1.64.0</grpc.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,6 +47,20 @@
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
         <version>${spring.cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>bom</artifactId>
+        <version>${aws.sdk.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-bom</artifactId>
+        <version>${grpc.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -86,6 +102,11 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring.boot.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
