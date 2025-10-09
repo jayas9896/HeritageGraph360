@@ -111,4 +111,12 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <repositories>
+    <repository>
+      <id>shibboleth-releases</id>
+      <name>Shibboleth Releases</name>
+      <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
+    </repository>
+  </repositories>
 </project>
