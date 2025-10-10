@@ -8,3 +8,4 @@
 - CL-0007 | 2025-10-07 | Fix Maven parent resolution for module builds | Codex | N/A
 - CL-0008 | 2025-10-08 | Fix parent relativePath formatting and dependency BOMs | Codex | N/A
 - CL-0009 | 2025-10-09 | Add Shibboleth repository for SAML dependencies | Codex | N/A
+- CL-0010 | 2025-10-10 | Fix gRPC Generated annotation dependency | Codex | N/A
