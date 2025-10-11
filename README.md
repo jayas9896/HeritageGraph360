@@ -52,11 +52,13 @@ See `docs/uml/architecture.mmd` for the system topology diagram.
 - Schemas: `schemas/sql-schema.sql`, `schemas/nosql-schemas.json`
 - UML diagrams: `docs/uml/*.mmd`
 - APIs: `docs/api/rest-api.md`, `docs/api/grpc-api.md`
+- OpenAPI sample: `docs/api/openapi-example.yaml`
 - Observability: `docs/observability.md`
 - RabbitMQ jobs: `docs/rabbitmq-jobs.md`
 - Testing: `docs/testing.md`
 - Agile artifacts: `docs/agile/*.md`
 - Demo scenarios: `docs/demo-scenarios.md`
+- Runbook: `docs/runbook.md`
 
 ## Local Setup (Baseline)
 1) Build the project:

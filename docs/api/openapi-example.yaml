@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: HeritageGraph360 API
+  version: 0.1.0
+paths:
+  /api/v1/profiles:
+    post:
+      summary: Create a profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                primaryEmail:
+                  type: string
+                primaryPhone:
+                  type: string
+      responses:
+        "200":
+          description: Accepted
+  /public/profiles/{profileId}:
+    get:
+      summary: Get public profile
+      parameters:
+        - name: profileId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
