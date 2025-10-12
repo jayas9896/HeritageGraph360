@@ -10,3 +10,4 @@
 - CL-0009 | 2025-10-09 | Add Shibboleth repository for SAML dependencies | Codex | N/A
 - CL-0010 | 2025-10-10 | Fix gRPC Generated annotation dependency | Codex | N/A
 - CL-0011 | 2025-10-11 | Add runbook, OpenAPI sample, and gitignore | Codex | N/A
+- CL-0012 | 2025-10-12 | Enforce tenant header at gateway | Codex | N/A

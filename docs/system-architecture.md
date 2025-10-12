@@ -18,6 +18,7 @@ HeritageGraph360 is a multi-tenant platform that separates edge access, identity
 - Tenant ID format: `org-{region}-{id}`.
 - Tenant ID required for all non-public APIs.
 - Partition keys align with tenant ID for Kafka topics and Kinesis shards.
+- Gateway enforces `x-tenant-id` header for protected routes.
 
 ## Failure Modes and Backpressure
 - Kafka consumer lag triggers throttling in the gateway.
