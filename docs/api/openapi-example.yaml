@@ -6,6 +6,17 @@ paths:
   /api/v1/profiles:
     post:
       summary: Create a profile
+      parameters:
+        - name: x-tenant-id
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: x-actor-id
+          in: header
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:

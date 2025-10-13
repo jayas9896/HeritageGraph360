@@ -1,5 +1,8 @@
 package com.heritagegraph360.profile.api;
 
+import com.heritagegraph360.profile.service.ProfileWorkflowService;
+import java.util.UUID;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/public/profiles")
 public class PublicProfileController {
+    private final ProfileWorkflowService workflowService;
+
+    /**
+     * Creates a controller with workflow dependencies.
+     * Importance: Connects HTTP requests to profile workflows.
+     * Alternatives: Use a separate handler layer for routing.
+     *
+     * @param workflowService the workflow service.
+     */
+    public PublicProfileController(ProfileWorkflowService workflowService) {
+        this.workflowService = workflowService;
+    }
+
     /**
      * Returns a public profile summary.
      * Importance: Provides a safe, minimal view for public access use cases.
@@ -24,7 +40,11 @@ public class PublicProfileController {
      */
     @GetMapping("/{profileId}")
     public ResponseEntity<PublicProfileResponse> getPublicProfile(@PathVariable String profileId) {
-        PublicProfileResponse response = new PublicProfileResponse(profileId, "Public Name", "PUBLIC");
-        return ResponseEntity.ok(response);
+        try {
+            PublicProfileResponse response = workflowService.getPublicProfile(UUID.fromString(profileId));
+            return ResponseEntity.ok(response);
+        } catch (IllegalStateException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }

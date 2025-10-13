@@ -88,3 +88,12 @@ CREATE TABLE approvals (
     status VARCHAR(16) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE merges (
+    merge_id UUID PRIMARY KEY,
+    tenant_id VARCHAR(64) REFERENCES tenants(tenant_id),
+    source_profile_id UUID REFERENCES profiles(profile_id),
+    target_profile_id UUID REFERENCES profiles(profile_id),
+    status VARCHAR(32) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);

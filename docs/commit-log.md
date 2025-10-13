@@ -11,3 +11,4 @@
 - CL-0010 | 2025-10-10 | Fix gRPC Generated annotation dependency | Codex | N/A
 - CL-0011 | 2025-10-11 | Add runbook, OpenAPI sample, and gitignore | Codex | N/A
 - CL-0012 | 2025-10-12 | Enforce tenant header at gateway | Codex | N/A
+- CL-0013 | 2025-10-13 | Implement profile workflows, merges, and event payload storage | Codex | N/A
