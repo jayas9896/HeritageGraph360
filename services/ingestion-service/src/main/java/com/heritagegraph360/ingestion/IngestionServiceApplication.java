@@ -1,7 +1,9 @@
 package com.heritagegraph360.ingestion;
 
 import org.springframework.boot.SpringApplication;
+import com.heritagegraph360.ingestion.config.IngestionProperties;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * Boots the ingestion service for bulk and streaming data intake.
@@ -9,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Alternatives: Offload streaming ingestion to a managed ETL service.
  */
 @SpringBootApplication
+@EnableConfigurationProperties(IngestionProperties.class)
 public class IngestionServiceApplication {
     /**
      * Starts the Spring Boot application.

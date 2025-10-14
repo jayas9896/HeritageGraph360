@@ -26,6 +26,16 @@
           "collection": "Census"
         }
       }
+    },
+    "insight_summaries": {
+      "description": "Insight summaries produced by anomaly detection",
+      "example": {
+        "tenantId": "org-us-001",
+        "profileId": "uuid",
+        "status": "COMPLETED",
+        "summary": "No conflicts detected",
+        "createdAt": "2026-01-15T12:00:00Z"
+      }
     }
   }
 }

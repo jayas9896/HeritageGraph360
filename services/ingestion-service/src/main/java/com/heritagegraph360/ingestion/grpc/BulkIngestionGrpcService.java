@@ -1,5 +1,6 @@
 package com.heritagegraph360.ingestion.grpc;
 
+import com.heritagegraph360.ingestion.service.IngestionProcessingService;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
@@ -10,6 +11,19 @@ import net.devh.boot.grpc.server.service.GrpcService;
  */
 @GrpcService
 public class BulkIngestionGrpcService extends BulkIngestionServiceGrpc.BulkIngestionServiceImplBase {
+    private final IngestionProcessingService processingService;
+
+    /**
+     * Creates the gRPC service with processing dependencies.
+     * Importance: Connects gRPC ingestion to processing workflows.
+     * Alternatives: Publish events directly from gRPC handlers.
+     *
+     * @param processingService the processing service.
+     */
+    public BulkIngestionGrpcService(IngestionProcessingService processingService) {
+        this.processingService = processingService;
+    }
+
     /**
      * Accepts streaming ingestion records and returns per-record status.
      * Importance: Supports backpressure and per-record feedback in bulk pipelines.
@@ -30,6 +44,7 @@ public class BulkIngestionGrpcService extends BulkIngestionServiceGrpc.BulkInges
              */
             @Override
             public void onNext(IngestionRecord record) {
+                processingService.processGrpcRecord(record.getTenantId(), record.getPayloadJson());
                 IngestionStatus status = IngestionStatus.newBuilder()
                     .setRecordId(record.getRecordId())
                     .setStatus("ACCEPTED")
