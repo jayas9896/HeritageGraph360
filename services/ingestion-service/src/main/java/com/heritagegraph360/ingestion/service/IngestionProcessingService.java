@@ -3,13 +3,13 @@ package com.heritagegraph360.ingestion.service;
 import com.heritagegraph360.ingestion.api.IngestionRequest;
 import com.heritagegraph360.ingestion.config.IngestionProperties;
 import com.heritagegraph360.ingestion.stream.IngestionEventPublisher;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.kinesis.KinesisClient;
 import software.amazon.awssdk.services.kinesis.model.PutRecordRequest;
+import software.amazon.awssdk.core.SdkBytes;
 
 /**
  * Processes ingestion requests and publishes to streams.
@@ -94,7 +94,7 @@ public class IngestionProcessingService {
         PutRecordRequest request = PutRecordRequest.builder()
             .streamName(streamName)
             .partitionKey(tenantId)
-            .data(ByteBuffer.wrap(payload.getBytes(StandardCharsets.UTF_8)))
+            .data(SdkBytes.fromByteArray(payload.getBytes(StandardCharsets.UTF_8)))
             .build();
         kinesisClient.putRecord(request);
     }
