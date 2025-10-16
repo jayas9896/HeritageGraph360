@@ -8,6 +8,7 @@ package com.heritagegraph360.profile.api;
 public class ProfileCreateRequest {
     private String primaryEmail;
     private String primaryPhone;
+    private String displayName;
 
     /**
      * Returns the primary email.
@@ -51,5 +52,27 @@ public class ProfileCreateRequest {
      */
     public void setPrimaryPhone(String primaryPhone) {
         this.primaryPhone = primaryPhone;
+    }
+
+    /**
+     * Returns the display name.
+     * Importance: Provides a human-readable identifier for profiles.
+     * Alternatives: Use structured name fields (given/family).
+     *
+     * @return the display name.
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    /**
+     * Updates the display name.
+     * Importance: Supports profile creation with names.
+     * Alternatives: Use structured name fields (given/family).
+     *
+     * @param displayName the display name.
+     */
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

@@ -45,6 +45,7 @@ public class ProfileWorkflowService {
     private final AuditLogRepository auditLogRepository;
     private final MergeRepository mergeRepository;
     private final EventPayloadRepository eventPayloadRepository;
+    private final DuplicateDetectionService duplicateDetectionService;
 
     /**
      * Creates the workflow service.
@@ -57,19 +58,22 @@ public class ProfileWorkflowService {
      * @param auditLogRepository the audit log repository.
      * @param mergeRepository the merge repository.
      * @param eventPayloadRepository the event payload repository.
+     * @param duplicateDetectionService the duplicate detection service.
      */
     public ProfileWorkflowService(ProfileRepository profileRepository,
                                   RelationshipRepository relationshipRepository,
                                   ApprovalRepository approvalRepository,
                                   AuditLogRepository auditLogRepository,
                                   MergeRepository mergeRepository,
-                                  EventPayloadRepository eventPayloadRepository) {
+                                  EventPayloadRepository eventPayloadRepository,
+                                  DuplicateDetectionService duplicateDetectionService) {
         this.profileRepository = profileRepository;
         this.relationshipRepository = relationshipRepository;
         this.approvalRepository = approvalRepository;
         this.auditLogRepository = auditLogRepository;
         this.mergeRepository = mergeRepository;
         this.eventPayloadRepository = eventPayloadRepository;
+        this.duplicateDetectionService = duplicateDetectionService;
     }
 
     /**
@@ -98,6 +102,7 @@ public class ProfileWorkflowService {
         profile.setTenantId(tenantId);
         profile.setPrimaryEmail(request.getPrimaryEmail());
         profile.setPrimaryPhone(request.getPrimaryPhone());
+        profile.setDisplayName(request.getDisplayName());
         profile.setClaimed(false);
         profile.setVisibility(VISIBILITY_PRIVATE);
         profile.setCreatedAt(Instant.now());
@@ -187,13 +192,19 @@ public class ProfileWorkflowService {
      * @return the merge response.
      */
     public MergeResponse requestMerge(String tenantId, UUID actorId, UUID profileId, MergeRequest request) {
-        requireProfile(tenantId, profileId);
+        ProfileEntity source = requireProfile(tenantId, profileId);
+        ProfileEntity target = requireProfile(tenantId, UUID.fromString(request.getTargetProfileId()));
+        boolean sharedContact = matchesContact(source, target);
+        boolean duplicate = duplicateDetectionService.isPotentialDuplicate(
+            source.getDisplayName(),
+            target.getDisplayName(),
+            sharedContact);
         MergeEntity merge = new MergeEntity();
         merge.setMergeId(UUID.randomUUID());
         merge.setTenantId(tenantId);
         merge.setSourceProfileId(profileId);
         merge.setTargetProfileId(UUID.fromString(request.getTargetProfileId()));
-        merge.setStatus("PENDING");
+        merge.setStatus(duplicate ? "PENDING" : "REVIEW_REQUIRED");
         merge.setCreatedAt(Instant.now());
         mergeRepository.save(merge);
 
@@ -335,5 +346,22 @@ public class ProfileWorkflowService {
         payload.setPayloadJson(payloadJson);
         payload.setIngestedAt(Instant.now());
         eventPayloadRepository.save(payload);
+    }
+
+    /**
+     * Determines whether two profiles share contact identifiers.
+     * Importance: Supports duplicate detection rules that require shared contacts.
+     * Alternatives: Use a contact normalization service.
+     *
+     * @param source the source profile.
+     * @param target the target profile.
+     * @return true when contact identifiers match.
+     */
+    private boolean matchesContact(ProfileEntity source, ProfileEntity target) {
+        boolean emailMatches = source.getPrimaryEmail() != null
+            && source.getPrimaryEmail().equalsIgnoreCase(target.getPrimaryEmail());
+        boolean phoneMatches = source.getPrimaryPhone() != null
+            && source.getPrimaryPhone().equalsIgnoreCase(target.getPrimaryPhone());
+        return emailMatches || phoneMatches;
     }
 }

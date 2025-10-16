@@ -56,6 +56,7 @@ CREATE TABLE profiles (
     tenant_id VARCHAR(64) REFERENCES tenants(tenant_id),
     primary_email VARCHAR(255),
     primary_phone VARCHAR(32),
+    display_name VARCHAR(128),
     claimed BOOLEAN NOT NULL DEFAULT FALSE,
     visibility VARCHAR(16) NOT NULL DEFAULT 'PRIVATE',
     created_at TIMESTAMP NOT NULL DEFAULT NOW()

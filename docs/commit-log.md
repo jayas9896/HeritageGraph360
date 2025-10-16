@@ -14,3 +14,4 @@
 - CL-0013 | 2025-10-13 | Implement profile workflows, merges, and event payload storage | Codex | N/A
 - CL-0014 | 2025-10-14 | Implement insights processing and ingestion workflow services | Codex | N/A
 - CL-0015 | 2025-10-15 | Fix Kinesis record serialization in ingestion service | Codex | N/A
+- CL-0016 | 2025-10-16 | Add duplicate detection and profile display names | Codex | N/A

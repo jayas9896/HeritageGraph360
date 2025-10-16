@@ -28,6 +28,9 @@ public class ProfileEntity {
     @Column(name = "primary_phone", length = 32)
     private String primaryPhone;
 
+    @Column(name = "display_name", length = 128)
+    private String displayName;
+
     @Column(name = "claimed", nullable = false)
     private boolean claimed;
 
@@ -131,6 +134,28 @@ public class ProfileEntity {
      */
     public void setPrimaryPhone(String primaryPhone) {
         this.primaryPhone = primaryPhone;
+    }
+
+    /**
+     * Returns the display name.
+     * Importance: Provides a human-readable profile identifier.
+     * Alternatives: Use structured name fields (given/family).
+     *
+     * @return the display name.
+     */
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    /**
+     * Updates the display name.
+     * Importance: Supports profile updates and search workflows.
+     * Alternatives: Use structured name fields (given/family).
+     *
+     * @param displayName the display name.
+     */
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     /**
