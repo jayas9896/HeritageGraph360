@@ -3,6 +3,28 @@ server:
 spring:
   application:
     name: identity-service
+  security:
+    oauth2:
+      client:
+        registration:
+          heritage-oidc:
+            client-id: demo-client-id
+            client-secret: demo-client-secret
+            scope: openid,profile,email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          heritage-oidc:
+            issuer-uri: https://example-issuer.local
+    saml2:
+      relyingparty:
+        registration:
+          heritage-saml:
+            assertingparty:
+              entity-id: https://example-idp.local/entity
+              singlesignon:
+                url: https://example-idp.local/sso
+                binding: post
+            entity-id: https://heritagegraph360.local/saml
   datasource:
     url: jdbc:postgresql://localhost:5432/heritagegraph360
     username: heritage
