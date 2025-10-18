@@ -16,3 +16,4 @@
 - CL-0015 | 2025-10-15 | Fix Kinesis record serialization in ingestion service | Codex | N/A
 - CL-0016 | 2025-10-16 | Add duplicate detection and profile display names | Codex | N/A
 - CL-0017 | 2025-10-17 | Strengthen gateway JWT role mapping and auth config | Codex | N/A
+- CL-0018 | 2025-10-18 | Add audit trail retrieval API | Codex | N/A
