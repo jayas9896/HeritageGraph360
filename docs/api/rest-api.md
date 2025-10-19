@@ -11,6 +11,7 @@ Base URL: `/api/v1`
 - `POST /profiles/{profileId}/claim`: claim a profile.
 - `POST /profiles/{profileId}/relationships`: create or update relationship.
 - `POST /profiles/{profileId}/merge`: request a merge workflow.
+- `POST /profiles/{profileId}/sensitive-fields`: store encrypted sensitive fields.
 - `GET /audit/{profileId}`: fetch audit trail.
 - `POST /ingestion/records`: submit a single ingestion record.
 - `GET /insights/{profileId}`: fetch insight summaries.

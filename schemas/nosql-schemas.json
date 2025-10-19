@@ -36,6 +36,16 @@
         "summary": "No conflicts detected",
         "createdAt": "2026-01-15T12:00:00Z"
       }
+    },
+    "sensitive_fields": {
+      "description": "Encrypted sensitive profile fields",
+      "example": {
+        "tenantId": "org-us-001",
+        "profileId": "uuid",
+        "fieldType": "MEDICAL_HISTORY",
+        "encryptedValue": "base64...",
+        "createdAt": "2026-01-15T12:00:00Z"
+      }
     }
   }
 }
