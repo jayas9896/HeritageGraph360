@@ -2,6 +2,7 @@ package com.heritagegraph360.profile.api;
 
 import com.heritagegraph360.profile.service.SensitiveFieldService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,7 @@ public class SensitiveFieldController {
      * @return the response.
      */
     @PostMapping("/{profileId}/sensitive-fields")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('REVIEWER')")
     public ResponseEntity<SensitiveFieldResponse> storeSensitiveField(
         @RequestHeader("x-tenant-id") String tenantId,
         @RequestHeader("x-actor-id") String actorId,

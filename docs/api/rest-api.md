@@ -21,5 +21,6 @@ Base URL: `/api/v1`
 - `POST /approvals/{profileId}`: approve high-impact updates.
 - `POST /merges/{mergeId}/decision`: accept or reject merge.
 - `POST /tenants`: provision a new tenant.
+- `GET /audit/{profileId}`: fetch audit trail (reviewer/admin).
 
 Swagger UI endpoints are exposed per service at `/swagger-ui.html`.

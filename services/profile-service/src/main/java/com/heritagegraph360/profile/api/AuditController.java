@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -43,6 +44,7 @@ public class AuditController {
      * @return the audit trail response.
      */
     @GetMapping("/{profileId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('REVIEWER')")
     public ResponseEntity<AuditLogResponse> getAuditTrail(
         @RequestHeader("x-tenant-id") String tenantId,
         @PathVariable String profileId) {

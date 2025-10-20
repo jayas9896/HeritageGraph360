@@ -18,3 +18,4 @@
 - CL-0017 | 2025-10-17 | Strengthen gateway JWT role mapping and auth config | Codex | N/A
 - CL-0018 | 2025-10-18 | Add audit trail retrieval API | Codex | N/A
 - CL-0019 | 2025-10-19 | Add encrypted sensitive field storage | Codex | N/A
+- CL-0020 | 2025-10-20 | Enforce role-based access in profile and insights services | Codex | N/A

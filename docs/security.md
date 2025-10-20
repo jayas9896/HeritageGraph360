@@ -7,6 +7,7 @@
 - RBAC entities persisted in SQL with role, permission, and mapping tables.
 - Policy entities define fine-grained rules for field-level visibility.
 - Least-privilege defaults with explicit elevation workflows.
+- Method security enforces reviewer/admin access for audit, merge decisions, and sensitive fields.
 
 ## Public Access
 - `/health` and `/info` endpoints are public.

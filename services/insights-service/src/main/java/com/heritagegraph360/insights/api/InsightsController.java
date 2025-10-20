@@ -5,6 +5,7 @@ import com.heritagegraph360.insights.nosql.InsightSummaryRepository;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,7 @@ public class InsightsController {
      * @return the insight summary response.
      */
     @GetMapping("/{profileId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('REVIEWER')")
     public ResponseEntity<InsightSummaryResponse> getInsightSummary(
         @RequestHeader("x-tenant-id") String tenantId,
         @PathVariable String profileId) {

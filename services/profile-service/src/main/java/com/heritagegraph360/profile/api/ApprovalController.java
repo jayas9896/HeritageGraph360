@@ -4,6 +4,7 @@ import com.heritagegraph360.profile.service.ProfileWorkflowService;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +45,7 @@ public class ApprovalController {
      * @return the approval response.
      */
     @PostMapping("/{profileId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('REVIEWER')")
     public ResponseEntity<ApprovalResponse> approveChange(
         @RequestHeader("x-tenant-id") String tenantId,
         @RequestHeader("x-actor-id") String actorId,
