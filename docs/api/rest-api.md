@@ -22,5 +22,11 @@ Base URL: `/api/v1`
 - `POST /merges/{mergeId}/decision`: accept or reject merge.
 - `POST /tenants`: provision a new tenant.
 - `GET /audit/{profileId}`: fetch audit trail (reviewer/admin).
+- `POST /rbac/roles`: create a role (admin).
+- `GET /rbac/roles`: list roles (admin).
+- `POST /rbac/permissions`: create a permission (admin).
+- `GET /rbac/permissions`: list permissions (admin).
+- `POST /rbac/roles/{roleId}/permissions`: assign permission to role (admin).
+- `POST /rbac/accounts/{accountId}/roles`: assign role to account (admin).
 
 Swagger UI endpoints are exposed per service at `/swagger-ui.html`.
