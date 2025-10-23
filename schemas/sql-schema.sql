@@ -98,3 +98,13 @@ CREATE TABLE merges (
     status VARCHAR(32) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE profile_grants (
+    grant_id UUID PRIMARY KEY,
+    tenant_id VARCHAR(64) REFERENCES tenants(tenant_id),
+    profile_id UUID REFERENCES profiles(profile_id),
+    grantee_account_id UUID REFERENCES accounts(account_id),
+    field_name VARCHAR(64) NOT NULL,
+    visibility VARCHAR(16) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);

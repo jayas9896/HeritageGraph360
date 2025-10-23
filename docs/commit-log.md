@@ -21,3 +21,4 @@
 - CL-0020 | 2025-10-20 | Enforce role-based access in profile and insights services | Codex | N/A
 - CL-0021 | 2025-10-21 | Add OAuth2 resource server deps for service security | Codex | N/A
 - CL-0022 | 2025-10-22 | Add RBAC provisioning APIs and identity admin security | Codex | N/A
+- CL-0023 | 2025-10-23 | Add field-level grants and profile query access control | Codex | N/A
