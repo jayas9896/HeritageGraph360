@@ -30,5 +30,7 @@ Base URL: `/api/v1`
 - `GET /rbac/permissions`: list permissions (admin).
 - `POST /rbac/roles/{roleId}/permissions`: assign permission to role (admin).
 - `POST /rbac/accounts/{accountId}/roles`: assign role to account (admin).
+- `POST /policies`: create a policy (admin).
+- `GET /policies/{policyId}`: get a policy (admin).
 
 Swagger UI endpoints are exposed per service at `/swagger-ui.html`.
