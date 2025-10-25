@@ -23,3 +23,4 @@
 - CL-0022 | 2025-10-22 | Add RBAC provisioning APIs and identity admin security | Codex | N/A
 - CL-0023 | 2025-10-23 | Add field-level grants and profile query access control | Codex | N/A
 - CL-0024 | 2025-10-24 | Add policy management APIs | Codex | N/A
+- CL-0025 | 2025-10-25 | Add evidence ingestion and event payload persistence | Codex | N/A

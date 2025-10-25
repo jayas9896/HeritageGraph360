@@ -14,6 +14,7 @@ Base URL: `/api/v1`
 - `POST /profiles/{profileId}/sensitive-fields`: store encrypted sensitive fields.
 - `GET /profiles/{profileId}`: retrieve profile with field-level visibility.
 - `POST /profiles/{profileId}/grants`: create field-level visibility grant.
+- `POST /profiles/{profileId}/evidence`: store evidence metadata.
 - `GET /audit/{profileId}`: fetch audit trail.
 - `POST /ingestion/records`: submit a single ingestion record.
 - `GET /insights/{profileId}`: fetch insight summaries.

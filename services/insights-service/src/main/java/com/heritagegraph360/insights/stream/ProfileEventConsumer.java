@@ -41,7 +41,7 @@ public class ProfileEventConsumer {
     public void onProfileEvent(String payload) {
         InsightJobPayload jobPayload = new InsightJobPayload();
         jobPayload.setTenantId(extractField(payload, "tenantId", "unknown-tenant"));
-        jobPayload.setProfileId(extractField(payload, "profileId", "unknown-profile"));
+        jobPayload.setProfileId(extractProfileId(payload));
         jobPayload.setEvidenceSummary(payload);
         jobPublisher.publish(jobPayload);
     }
@@ -66,5 +66,31 @@ public class ProfileEventConsumer {
             return fallback;
         }
         return fallback;
+    }
+
+    /**
+     * Extracts profileId from top-level or nested payload fields.
+     * Importance: Ensures insight jobs identify target profiles.
+     * Alternatives: Use typed event payloads with explicit fields.
+     *
+     * @param payload the JSON payload.
+     * @return the profile identifier or fallback.
+     */
+    private String extractProfileId(String payload) {
+        try {
+            JsonNode node = objectMapper.readTree(payload);
+            if (node.hasNonNull("profileId")) {
+                return node.get("profileId").asText();
+            }
+            if (node.has("payload")) {
+                JsonNode nested = node.get("payload");
+                if (nested.hasNonNull("profileId")) {
+                    return nested.get("profileId").asText();
+                }
+            }
+        } catch (Exception ex) {
+            return "unknown-profile";
+        }
+        return "unknown-profile";
     }
 }

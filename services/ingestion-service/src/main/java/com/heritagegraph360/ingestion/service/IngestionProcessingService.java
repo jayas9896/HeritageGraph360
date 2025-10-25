@@ -3,7 +3,10 @@ package com.heritagegraph360.ingestion.service;
 import com.heritagegraph360.ingestion.api.IngestionRequest;
 import com.heritagegraph360.ingestion.config.IngestionProperties;
 import com.heritagegraph360.ingestion.stream.IngestionEventPublisher;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ public class IngestionProcessingService {
     private final IngestionEventPublisher eventPublisher;
     private final KinesisClient kinesisClient;
     private final IngestionProperties ingestionProperties;
+    private final ObjectMapper objectMapper;
 
     /**
      * Creates the ingestion processing service.
@@ -34,10 +38,12 @@ public class IngestionProcessingService {
      */
     public IngestionProcessingService(IngestionEventPublisher eventPublisher,
                                       KinesisClient kinesisClient,
-                                      IngestionProperties ingestionProperties) {
+                                      IngestionProperties ingestionProperties,
+                                      ObjectMapper objectMapper) {
         this.eventPublisher = eventPublisher;
         this.kinesisClient = kinesisClient;
         this.ingestionProperties = ingestionProperties;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -48,8 +54,9 @@ public class IngestionProcessingService {
      * @param request the ingestion request.
      */
     public void processRestRequest(IngestionRequest request) {
-        publishKafkaEvent(request.getTenantId(), request.getPayloadJson());
-        publishKinesisEvent(request.getTenantId(), request.getPayloadJson());
+        String enrichedPayload = enrichPayload(request.getTenantId(), "INGESTION_REST", request.getPayloadJson());
+        publishKafkaEvent(request.getTenantId(), enrichedPayload);
+        publishKinesisEvent(request.getTenantId(), enrichedPayload);
     }
 
     /**
@@ -61,8 +68,9 @@ public class IngestionProcessingService {
      * @param payloadJson the payload JSON.
      */
     public void processGrpcRecord(String tenantId, String payloadJson) {
-        publishKafkaEvent(tenantId, payloadJson);
-        publishKinesisEvent(tenantId, payloadJson);
+        String enrichedPayload = enrichPayload(tenantId, "INGESTION_GRPC", payloadJson);
+        publishKafkaEvent(tenantId, enrichedPayload);
+        publishKinesisEvent(tenantId, enrichedPayload);
     }
 
     /**
@@ -97,5 +105,28 @@ public class IngestionProcessingService {
             .data(SdkBytes.fromByteArray(payload.getBytes(StandardCharsets.UTF_8)))
             .build();
         kinesisClient.putRecord(request);
+    }
+
+    /**
+     * Enriches payloads with tenant and event metadata.
+     * Importance: Standardizes event payloads for downstream processing.
+     * Alternatives: Use a schema registry and structured event types.
+     *
+     * @param tenantId the tenant identifier.
+     * @param eventType the event type.
+     * @param payloadJson the payload JSON.
+     * @return the enriched JSON payload.
+     */
+    private String enrichPayload(String tenantId, String eventType, String payloadJson) {
+        try {
+            Map<String, Object> wrapper = new HashMap<>();
+            wrapper.put("tenantId", tenantId);
+            wrapper.put("eventType", eventType);
+            wrapper.put("payload", payloadJson);
+            return objectMapper.writeValueAsString(wrapper);
+        } catch (Exception ex) {
+            LOGGER.warn("Failed to enrich payload, using raw payload", ex);
+            return payloadJson;
+        }
     }
 }
