@@ -32,12 +32,14 @@ public class EvidenceService {
      * Alternatives: Store evidence in SQL with rigid schemas.
      *
      * @param tenantId the tenant identifier.
+     * @param profileId the profile identifier.
      * @param request the evidence request.
      * @return the stored record.
      */
-    public EvidenceRecordDocument storeEvidence(String tenantId, EvidenceRequest request) {
+    public EvidenceRecordDocument storeEvidence(String tenantId, String profileId, EvidenceRequest request) {
         EvidenceRecordDocument document = new EvidenceRecordDocument();
         document.setTenantId(tenantId);
+        document.setProfileId(profileId);
         document.setEvidenceId(request.getEvidenceId());
         document.setSourceType(request.getSourceType());
         document.setSchemaVersion(request.getSchemaVersion());

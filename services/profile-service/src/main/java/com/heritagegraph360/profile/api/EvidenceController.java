@@ -49,6 +49,6 @@ public class EvidenceController {
         @RequestHeader("x-tenant-id") String tenantId,
         @PathVariable String profileId,
         @RequestBody EvidenceRequest request) {
-        return ResponseEntity.ok(evidenceService.storeEvidence(tenantId, request));
+        return ResponseEntity.ok(evidenceService.storeEvidence(tenantId, profileId, request));
     }
 }

@@ -14,6 +14,7 @@ public class EvidenceRecordDocument {
     @Id
     private String id;
     private String tenantId;
+    private String profileId;
     private String evidenceId;
     private String sourceType;
     private String schemaVersion;
@@ -85,6 +86,28 @@ public class EvidenceRecordDocument {
      */
     public void setEvidenceId(String evidenceId) {
         this.evidenceId = evidenceId;
+    }
+
+    /**
+     * Returns the profile identifier.
+     * Importance: Links evidence to profiles for lineage verification.
+     * Alternatives: Store profile references in metadata only.
+     *
+     * @return the profile identifier.
+     */
+    public String getProfileId() {
+        return profileId;
+    }
+
+    /**
+     * Updates the profile identifier.
+     * Importance: Supports evidence ingestion workflows.
+     * Alternatives: Store profile references in metadata only.
+     *
+     * @param profileId the profile identifier.
+     */
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
     }
 
     /**

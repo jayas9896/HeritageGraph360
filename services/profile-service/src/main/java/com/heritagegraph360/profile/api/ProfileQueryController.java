@@ -54,6 +54,9 @@ public class ProfileQueryController {
         @PathVariable String profileId) {
         ProfileEntity profile = profileRepository.findById(UUID.fromString(profileId))
             .orElseThrow(() -> new IllegalStateException("Profile not found"));
+        if (!tenantId.equals(profile.getTenantId())) {
+            throw new IllegalStateException("Profile not found");
+        }
         boolean canViewEmail = grantService.canViewField(tenantId, profile.getProfileId(),
             UUID.fromString(actorId), "PRIMARY_EMAIL");
         boolean canViewPhone = grantService.canViewField(tenantId, profile.getProfileId(),

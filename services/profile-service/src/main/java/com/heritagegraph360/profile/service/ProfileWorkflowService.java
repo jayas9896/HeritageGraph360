@@ -25,6 +25,7 @@ import com.heritagegraph360.profile.repo.AuditLogRepository;
 import com.heritagegraph360.profile.repo.MergeRepository;
 import com.heritagegraph360.profile.repo.ProfileRepository;
 import com.heritagegraph360.profile.repo.RelationshipRepository;
+import com.heritagegraph360.profile.stream.ProfileEventPublisher;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,6 +47,7 @@ public class ProfileWorkflowService {
     private final MergeRepository mergeRepository;
     private final EventPayloadRepository eventPayloadRepository;
     private final DuplicateDetectionService duplicateDetectionService;
+    private final ProfileEventPublisher eventPublisher;
 
     /**
      * Creates the workflow service.
@@ -59,6 +61,7 @@ public class ProfileWorkflowService {
      * @param mergeRepository the merge repository.
      * @param eventPayloadRepository the event payload repository.
      * @param duplicateDetectionService the duplicate detection service.
+     * @param eventPublisher the profile event publisher.
      */
     public ProfileWorkflowService(ProfileRepository profileRepository,
                                   RelationshipRepository relationshipRepository,
@@ -66,7 +69,8 @@ public class ProfileWorkflowService {
                                   AuditLogRepository auditLogRepository,
                                   MergeRepository mergeRepository,
                                   EventPayloadRepository eventPayloadRepository,
-                                  DuplicateDetectionService duplicateDetectionService) {
+                                  DuplicateDetectionService duplicateDetectionService,
+                                  ProfileEventPublisher eventPublisher) {
         this.profileRepository = profileRepository;
         this.relationshipRepository = relationshipRepository;
         this.approvalRepository = approvalRepository;
@@ -74,6 +78,7 @@ public class ProfileWorkflowService {
         this.mergeRepository = mergeRepository;
         this.eventPayloadRepository = eventPayloadRepository;
         this.duplicateDetectionService = duplicateDetectionService;
+        this.eventPublisher = eventPublisher;
     }
 
     /**
@@ -112,6 +117,7 @@ public class ProfileWorkflowService {
             "Created profile with contact identifiers.");
         recordEventPayload(tenantId, "PROFILE_CREATED",
             "{\"profileId\":\"" + profile.getProfileId() + "\"}");
+        eventPublisher.publishProfileEvent(tenantId, "PROFILE_CREATED", profile.getProfileId().toString());
 
         return new ProfileCreateResponse("ACCEPTED", "Profile created: " + profile.getProfileId());
     }
@@ -176,6 +182,7 @@ public class ProfileWorkflowService {
 
         recordAudit(tenantId, actorId, "RELATIONSHIP_UPSERTED", profileId,
             "Related profile: " + request.getRelatedProfileId());
+        eventPublisher.publishProfileEvent(tenantId, "RELATIONSHIP_UPSERTED", profileId.toString());
 
         return new RelationshipResponse(profileId.toString(), request.getRelatedProfileId(), request.getStatus());
     }
@@ -209,6 +216,7 @@ public class ProfileWorkflowService {
         mergeRepository.save(merge);
 
         recordAudit(tenantId, actorId, "MERGE_REQUESTED", profileId, request.getReason());
+        eventPublisher.publishProfileEvent(tenantId, "MERGE_REQUESTED", profileId.toString());
 
         return new MergeResponse(profileId.toString(), request.getTargetProfileId(), merge.getStatus());
     }

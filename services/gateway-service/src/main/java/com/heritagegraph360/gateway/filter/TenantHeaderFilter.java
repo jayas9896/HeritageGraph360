@@ -1,6 +1,7 @@
 package com.heritagegraph360.gateway.filter;
 
 import java.util.List;
+import java.util.regex.Pattern;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 public class TenantHeaderFilter implements GlobalFilter, Ordered {
     private static final String TENANT_HEADER = "x-tenant-id";
     private static final List<String> PUBLIC_PATH_PREFIXES = List.of("/public", "/actuator/health", "/actuator/info");
+    private static final Pattern TENANT_PATTERN = Pattern.compile("org-[a-zA-Z0-9]+-[a-zA-Z0-9]+$");
 
     /**
      * Filters requests to enforce the tenant header.
@@ -36,6 +38,10 @@ public class TenantHeaderFilter implements GlobalFilter, Ordered {
         }
         String tenantId = exchange.getRequest().getHeaders().getFirst(TENANT_HEADER);
         if (tenantId == null || tenantId.isBlank()) {
+            exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
+            return exchange.getResponse().setComplete();
+        }
+        if (!TENANT_PATTERN.matcher(tenantId).matches()) {
             exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
             return exchange.getResponse().setComplete();
         }

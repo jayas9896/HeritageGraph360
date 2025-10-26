@@ -17,6 +17,7 @@
       "description": "Scanned documents and evidence metadata",
       "example": {
         "tenantId": "org-us-001",
+        "profileId": "uuid",
         "evidenceId": "uuid",
         "sourceType": "ARCHIVE",
         "schemaVersion": "1.0",
