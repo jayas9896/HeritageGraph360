@@ -34,7 +34,7 @@ public class IdentityAdminSecurityConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
 
         http
-            .securityMatcher("/api/v1/rbac/**", "/api/v1/policies/**")
+            .securityMatcher("/api/v1/rbac/**", "/api/v1/policies/**", "/api/v1/accounts/**")
             .authorizeHttpRequests(auth -> auth.anyRequest().hasRole("ADMIN"))
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter)));
         return http.build();
