@@ -26,3 +26,4 @@
 - CL-0025 | 2025-10-25 | Add evidence ingestion and event payload persistence | Codex | N/A
 - CL-0026 | 2025-10-26 | Enforce tenant format and enrich profile/evidence flows | Codex | N/A
 - CL-0027 | 2025-10-27 | Add account provisioning APIs | Codex | N/A
+- CL-0028 | 2025-10-28 | Add policy evaluation API and service | Codex | N/A

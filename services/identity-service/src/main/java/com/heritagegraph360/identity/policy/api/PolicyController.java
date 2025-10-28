@@ -2,6 +2,7 @@ package com.heritagegraph360.identity.policy.api;
 
 import com.heritagegraph360.identity.policy.PolicyEntity;
 import com.heritagegraph360.identity.policy.PolicyRepository;
+import com.heritagegraph360.identity.policy.service.PolicyEvaluationService;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/policies")
 public class PolicyController {
     private final PolicyRepository policyRepository;
+    private final PolicyEvaluationService policyEvaluationService;
 
     /**
      * Creates the policy controller.
@@ -30,8 +32,11 @@ public class PolicyController {
      *
      * @param policyRepository the policy repository.
      */
-    public PolicyController(PolicyRepository policyRepository) {
+    public PolicyController(
+        PolicyRepository policyRepository,
+        PolicyEvaluationService policyEvaluationService) {
         this.policyRepository = policyRepository;
+        this.policyEvaluationService = policyEvaluationService;
     }
 
     /**
@@ -72,5 +77,23 @@ public class PolicyController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PolicyEntity> getPolicy(@PathVariable String policyId) {
         return ResponseEntity.of(policyRepository.findById(UUID.fromString(policyId)));
+    }
+
+    /**
+     * Evaluates a policy decision for a resource and action.
+     * Importance: Enables runtime policy checks for sensitive operations.
+     * Alternatives: Evaluate policies in each consuming service.
+     *
+     * @param tenantId the tenant identifier.
+     * @param request the evaluation request.
+     * @return the evaluation response.
+     */
+    @PostMapping("/evaluate")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<PolicyEvaluationResponse> evaluatePolicy(
+        @RequestHeader("x-tenant-id") String tenantId,
+        @RequestBody PolicyEvaluationRequest request) {
+        boolean allowed = policyEvaluationService.isAllowed(tenantId, request.getResource(), request.getAction());
+        return ResponseEntity.ok(new PolicyEvaluationResponse(allowed));
     }
 }
